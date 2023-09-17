@@ -22,11 +22,15 @@
  * SOFTWARE.
  */
 
+
+//QW Removed options for backlight color in preferences_face. Will be set automatically by the time-of-day 
+
 #include <stdlib.h>
 #include "preferences_face.h"
 #include "watch.h"
 
-#define PREFERENCES_FACE_NUM_PREFEFENCES (7)
+#define PREFERENCES_FACE_NUM_PREFEFENCES (5) //Number of preferences 
+//two dimensional array, num_prefs x str_length
 const char preferences_face_titles[PREFERENCES_FACE_NUM_PREFEFENCES][11] = {
     "CL        ",   // Clock: 12 or 24 hour
     "BT  Beep  ",   // Buttons: should they beep?
@@ -34,11 +38,11 @@ const char preferences_face_titles[PREFERENCES_FACE_NUM_PREFEFENCES][11] = {
     "LE        ",   // Low Energy mode: how long before it engages?
     "LT        ",   // Light: duration
 #ifdef WATCH_IS_BLUE_BOARD
-    "LT   blu  ",   // Light: blue component (for watches with blue LED)
+    //"LT   blu  ",   // Light: blue component (for watches with blue LED)
 #else
-    "LT   grn  ",   // Light: green component
+    //"LT   grn  ",   // Light: green component
 #endif
-    "LT   red  ",   // Light: red component
+    //"LT   red  ",   // Light: red component
 };
 
 void preferences_face_setup(movement_settings_t *settings, uint8_t watch_face_index, void ** context_ptr) {
