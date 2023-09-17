@@ -9,6 +9,8 @@
 
 //QW Removed options for backlight color in preferences_face. Will be set automatically by the time-of-day 
 
+Tested on SW Lite only
+
 
 
 The Sensor Watch
