@@ -1,3 +1,16 @@
+        //QW updated to change LED backlight color according to the time of day
+        //At least one LED will always be at full intensity
+        
+        //zone 0 = 12AM - 6AM, RED
+        //zone 1 = 6AM - 12PM, YELLOW to GREEN
+        //zone 2 = 12PM - 6PM, GREEN to YELLOW
+        //zone 3 = 6PM - 12AM, YELLOW to RED
+
+
+//QW Removed options for backlight color in preferences_face. Will be set automatically by the time-of-day 
+
+
+
 The Sensor Watch
 ================
 
