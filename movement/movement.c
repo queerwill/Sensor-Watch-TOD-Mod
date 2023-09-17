@@ -213,9 +213,91 @@ void movement_request_tick_frequency(uint8_t freq) {
 }
 
 void movement_illuminate_led(void) {
-    if (movement_state.settings.bit.led_duration) {
+/*
+        if (movement_state.settings.bit.led_duration) {
         watch_set_led_color(movement_state.settings.bit.led_red_color ? (0xF | movement_state.settings.bit.led_red_color << 4) : 0,
                             movement_state.settings.bit.led_green_color ? (0xF | movement_state.settings.bit.led_green_color << 4) : 0);
+        movement_state.light_ticks = (movement_state.settings.bit.led_duration * 2 - 1) * 128;
+        _movement_enable_fast_tick_if_needed();
+    }
+    
+*/
+    if (movement_state.settings.bit.led_duration) {
+        
+        //QW updated to change LED backlight color according to the time of day
+        //At least one LED will always be at full intensity
+        
+        //get current time        
+        watch_date_time now = watch_rtc_get_date_time();
+        
+        
+        //zone 0 = 12AM - 6AM, RED
+        //zone 1 = 6AM - 12PM, YELLOW to GREEN
+        //zone 2 = 12PM - 6PM, GREEN to YELLOW
+        //zone 3 = 6PM - 12AM, YELLOW to RED
+        
+        
+        //TODO maybe change color value change to cubic instead of linear because light
+        
+
+        uint8_t rval;
+        uint8_t gval;
+        
+        //red zone 0, 3
+        if (now.unit.hour < 6 || now.unit.hour >= 6*3 ) {
+        
+            rval = 255; //255 = FULL, 0 = OFF
+        
+        }
+
+        
+        //red zone 1
+        else if (now.unit.hour >= 6 && now.unit.hour < 6*2 ) {
+        
+            rval = 255 - (((60 * (now.unit.hour - 6) + now.unit.minute) * 255) / 360) ;
+            
+
+        
+        }
+        
+        //red zone 2
+        else if (now.unit.hour >= 12 && now.unit.hour < 6*3 ) {
+            
+            rval = ((60 * (now.unit.hour - 6*2) + now.unit.minute) * 255) / 360 ;
+            
+
+            
+            
+        }
+
+
+        //set green full zone 1,2
+        if (now.unit.hour >= 6 && now.unit.hour < 6*3 ) {
+        
+            gval = 255;
+        
+        }
+        //green zone 3
+        else if (now.unit.hour >= 6*3 ){
+         
+            gval = 255 - (((60 * (now.unit.hour - 6*3) + now.unit.minute) * 255) / 360) ;
+            
+        }
+        //green zone 0
+        else{gval=0;}
+
+
+        watch_set_led_color(rval, gval);
+        
+        /*
+        
+        watch_set_led_color(movement_state.settings.bit.led_red_color ? (0xF | movement_state.settings.bit.led_red_color << 4) : 0,
+                            movement_state.settings.bit.led_green_color ? (0xF | movement_state.settings.bit.led_green_color << 4) : 0);
+                            
+        */
+        
+        
+        //Keep below
         movement_state.light_ticks = (movement_state.settings.bit.led_duration * 2 - 1) * 128;
         _movement_enable_fast_tick_if_needed();
     }
