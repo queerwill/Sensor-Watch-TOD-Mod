@@ -1,4 +1,4 @@
-!image(/images/TOD-Mod-Preview.gif)
+![image](/images/TOD-Mod-Preview.gif)
 
         //QW updated to change LED backlight color according to the time of day
         //At least one LED will always be at full intensity
